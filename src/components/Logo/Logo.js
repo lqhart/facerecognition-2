@@ -15,8 +15,8 @@ const Logo = props => {
           <img style={{ paddingTop: "3px" }} alt="logo" src={ai} />
         </div>
       </Tilt>
-      <div>
-        <h1> Welcome to image brain analyzer. </h1>
+      <div className="textContent">
+        <h1> Welcome to image analyzer. </h1>
       </div>
     </div>
   );
