@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Navigation from "./components/navigation/Navigation.js";
+import Signin from "./components/Signin/Signin.js";
 import Logo from "./components/Logo/Logo.js";
 import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm.js";
 import Rank from "./components/Rank/Rank.js";
@@ -8,6 +9,7 @@ import "./App.css";
 import Face from "./components/Face/Face.js";
 import "tachyons";
 import Clarifai from "clarifai";
+import Register from "./components/Register/Register.js";
 
 const app = new Clarifai.App({
   apiKey: "d1c4f7ba3ce14b26941aebb35cbb66b5"
@@ -31,7 +33,8 @@ class App extends Component {
     this.state = {
       input: "",
       imageUrl: "",
-      box: {}
+      box: {},
+      route: "signin"
     };
   }
 
@@ -68,18 +71,30 @@ class App extends Component {
       .catch(err => console.log(err));
   };
 
+  onRouteChange = route => {
+    this.setState({ route: route });
+  };
+
   render() {
     return (
       <div>
         <Particles className="particles" params={particlesOptions} />
-        <Navigation />
-        <Logo />
-        <Rank />
-        <ImageLinkForm
-          onInputChange={this.onInputChange}
-          onButtonSubmit={this.onButtonSubmit}
-        />
-        <Face imageUrl={this.state.imageUrl} box={this.state.box} />
+        <Navigation onRouteChange={this.onRouteChange} />
+        {this.state.route === "home" ? (
+          <div>
+            <Logo />
+            <Rank />
+            <ImageLinkForm
+              onInputChange={this.onInputChange}
+              onButtonSubmit={this.onButtonSubmit}
+            />
+            <Face imageUrl={this.state.imageUrl} box={this.state.box} />
+          </div>
+        ) : this.state.route === "signin" ? (
+          <Signin onRouteChange={this.onRouteChange} />
+        ) : (
+          <Register onRouteChange={this.RouteChange} />
+        )}
       </div>
     );
   }
